@@ -6,6 +6,7 @@ class Config {
   static const String imageURL = "http://192.168.57.156:4000";
   // static const String imageURL ="mongodb+srv://neha:neha@cluster0.mwiyepg.mongodb.net/"
   static const String categoryAPI = "api/category";
+  static const String productAPI = "api/product";
   static const int pageSized = 10;
-  static const String currency = "rupees";
+  static const String currency = "Rs";
 }

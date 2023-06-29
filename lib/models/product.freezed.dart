@@ -23,12 +23,12 @@ mixin _$Product {
   String get productName => throw _privateConstructorUsedError;
   Category get category => throw _privateConstructorUsedError;
   String get productShortDescription => throw _privateConstructorUsedError;
-  String get productPrice => throw _privateConstructorUsedError;
-  String get productSalePrice => throw _privateConstructorUsedError;
+  double get productPrice => throw _privateConstructorUsedError;
+  double get productSalePrice => throw _privateConstructorUsedError;
   String get productImage => throw _privateConstructorUsedError;
   String get productSKU => throw _privateConstructorUsedError;
   String get productType => throw _privateConstructorUsedError;
-  String get productStatus => throw _privateConstructorUsedError;
+  String get stockStatus => throw _privateConstructorUsedError;
   String get productId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,12 +45,12 @@ abstract class $ProductCopyWith<$Res> {
       {String productName,
       Category category,
       String productShortDescription,
-      String productPrice,
-      String productSalePrice,
+      double productPrice,
+      double productSalePrice,
       String productImage,
       String productSKU,
       String productType,
-      String productStatus,
+      String stockStatus,
       String productId});
 
   $CategoryCopyWith<$Res> get category;
@@ -77,7 +77,7 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
     Object? productImage = null,
     Object? productSKU = null,
     Object? productType = null,
-    Object? productStatus = null,
+    Object? stockStatus = null,
     Object? productId = null,
   }) {
     return _then(_value.copyWith(
@@ -96,11 +96,11 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
       productPrice: null == productPrice
           ? _value.productPrice
           : productPrice // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       productSalePrice: null == productSalePrice
           ? _value.productSalePrice
           : productSalePrice // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       productImage: null == productImage
           ? _value.productImage
           : productImage // ignore: cast_nullable_to_non_nullable
@@ -113,9 +113,9 @@ class _$ProductCopyWithImpl<$Res, $Val extends Product>
           ? _value.productType
           : productType // ignore: cast_nullable_to_non_nullable
               as String,
-      productStatus: null == productStatus
-          ? _value.productStatus
-          : productStatus // ignore: cast_nullable_to_non_nullable
+      stockStatus: null == stockStatus
+          ? _value.stockStatus
+          : stockStatus // ignore: cast_nullable_to_non_nullable
               as String,
       productId: null == productId
           ? _value.productId
@@ -144,12 +144,12 @@ abstract class _$$_ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
       {String productName,
       Category category,
       String productShortDescription,
-      String productPrice,
-      String productSalePrice,
+      double productPrice,
+      double productSalePrice,
       String productImage,
       String productSKU,
       String productType,
-      String productStatus,
+      String stockStatus,
       String productId});
 
   @override
@@ -174,7 +174,7 @@ class __$$_ProductCopyWithImpl<$Res>
     Object? productImage = null,
     Object? productSKU = null,
     Object? productType = null,
-    Object? productStatus = null,
+    Object? stockStatus = null,
     Object? productId = null,
   }) {
     return _then(_$_Product(
@@ -193,11 +193,11 @@ class __$$_ProductCopyWithImpl<$Res>
       productPrice: null == productPrice
           ? _value.productPrice
           : productPrice // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       productSalePrice: null == productSalePrice
           ? _value.productSalePrice
           : productSalePrice // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       productImage: null == productImage
           ? _value.productImage
           : productImage // ignore: cast_nullable_to_non_nullable
@@ -210,9 +210,9 @@ class __$$_ProductCopyWithImpl<$Res>
           ? _value.productType
           : productType // ignore: cast_nullable_to_non_nullable
               as String,
-      productStatus: null == productStatus
-          ? _value.productStatus
-          : productStatus // ignore: cast_nullable_to_non_nullable
+      stockStatus: null == stockStatus
+          ? _value.stockStatus
+          : stockStatus // ignore: cast_nullable_to_non_nullable
               as String,
       productId: null == productId
           ? _value.productId
@@ -234,7 +234,7 @@ class _$_Product implements _Product {
       required this.productImage,
       required this.productSKU,
       required this.productType,
-      required this.productStatus,
+      required this.stockStatus,
       required this.productId});
 
   factory _$_Product.fromJson(Map<String, dynamic> json) =>
@@ -247,9 +247,9 @@ class _$_Product implements _Product {
   @override
   final String productShortDescription;
   @override
-  final String productPrice;
+  final double productPrice;
   @override
-  final String productSalePrice;
+  final double productSalePrice;
   @override
   final String productImage;
   @override
@@ -257,13 +257,13 @@ class _$_Product implements _Product {
   @override
   final String productType;
   @override
-  final String productStatus;
+  final String stockStatus;
   @override
   final String productId;
 
   @override
   String toString() {
-    return 'Product(productName: $productName, category: $category, productShortDescription: $productShortDescription, productPrice: $productPrice, productSalePrice: $productSalePrice, productImage: $productImage, productSKU: $productSKU, productType: $productType, productStatus: $productStatus, productId: $productId)';
+    return 'Product(productName: $productName, category: $category, productShortDescription: $productShortDescription, productPrice: $productPrice, productSalePrice: $productSalePrice, productImage: $productImage, productSKU: $productSKU, productType: $productType, stockStatus: $stockStatus, productId: $productId)';
   }
 
   @override
@@ -288,8 +288,8 @@ class _$_Product implements _Product {
                 other.productSKU == productSKU) &&
             (identical(other.productType, productType) ||
                 other.productType == productType) &&
-            (identical(other.productStatus, productStatus) ||
-                other.productStatus == productStatus) &&
+            (identical(other.stockStatus, stockStatus) ||
+                other.stockStatus == stockStatus) &&
             (identical(other.productId, productId) ||
                 other.productId == productId));
   }
@@ -306,7 +306,7 @@ class _$_Product implements _Product {
       productImage,
       productSKU,
       productType,
-      productStatus,
+      stockStatus,
       productId);
 
   @JsonKey(ignore: true)
@@ -328,12 +328,12 @@ abstract class _Product implements Product {
       {required final String productName,
       required final Category category,
       required final String productShortDescription,
-      required final String productPrice,
-      required final String productSalePrice,
+      required final double productPrice,
+      required final double productSalePrice,
       required final String productImage,
       required final String productSKU,
       required final String productType,
-      required final String productStatus,
+      required final String stockStatus,
       required final String productId}) = _$_Product;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$_Product.fromJson;
@@ -345,9 +345,9 @@ abstract class _Product implements Product {
   @override
   String get productShortDescription;
   @override
-  String get productPrice;
+  double get productPrice;
   @override
-  String get productSalePrice;
+  double get productSalePrice;
   @override
   String get productImage;
   @override
@@ -355,7 +355,7 @@ abstract class _Product implements Product {
   @override
   String get productType;
   @override
-  String get productStatus;
+  String get stockStatus;
   @override
   String get productId;
   @override

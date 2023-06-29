@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groceryapp/models/category.dart';
 import 'package:groceryapp/models/pagination.dart';
-import 'package:groceryapp/providers/category_provider.dart';
-
-
+import 'package:groceryapp/models/product_filter.dart';
+import 'package:groceryapp/providers.dart';
 
 class HomeCategoriesWidget extends ConsumerWidget {
   const HomeCategoriesWidget({super.key});
@@ -35,27 +33,43 @@ class HomeCategoriesWidget extends ConsumerWidget {
     ));
     return categories.when(
         data: (list) {
-          return _buildCategoryList(list!);
+          return _buildCategoryList(list!,ref);
         },
-        error: (_, __) => const Center(
-              child: Text("ERR in _categoriesList "),
-            ),
+        error: (err1, err2) {
+          print(err1);
+          return Center(
+            child: Text("$err1+$err2+ERR in _categoriesList "),
+          );
+        },
         loading: () => const Center(child: CircularProgressIndicator()));
   }
 
-  Widget _buildCategoryList(List<Category> categories) {
+  Widget _buildCategoryList(List<Category> categories, WidgetRef ref) {
     return Container(
       height: 100,
       alignment: Alignment.centerLeft,
       child: ListView.builder(
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
-        scrollDirection: Axis.horizontal ,
+        scrollDirection: Axis.horizontal,
         itemCount: categories.length,
         itemBuilder: (context, index) {
           var data = categories[index];
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              ProductFilterModel filterModel = ProductFilterModel(
+                  paginationModel: PaginationModel(page: 1, pageSize: 10),
+                  categoryId: data.categoryId);
+              ref
+                  .read(productsFilterProvider.notifier)
+                  .setProductFilter(filterModel);
+              ref.read(productsNotifierProvider.notifier).getProducts();
+              
+              Navigator.of(context).pushNamed("/products", arguments: {
+                'categoryId': data.categoryId,
+                'categoryName': data.categoryName
+              });
+            },
             child: Padding(
               padding: EdgeInsets.all(8),
               child: Column(children: [

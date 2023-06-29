@@ -14,12 +14,12 @@ abstract class Product with _$Product {
     required String productName,
     required Category category,
     required String productShortDescription,
-    required String productPrice,
-    required String productSalePrice,
+    required double productPrice,
+    required double productSalePrice,
     required String productImage,
     required String productSKU,
     required String productType,
-    required String productStatus,
+    required String stockStatus,
     required String productId,
   }) = _Product;
 
