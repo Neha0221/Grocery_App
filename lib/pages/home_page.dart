@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:groceryapp/components/product_card.dart';
-import 'package:groceryapp/models/category.dart';
+// import 'package:groceryapp/components/product_card.dart';
+// import 'package:groceryapp/models/category.dart';
 import 'package:groceryapp/widgets/widget_home_categories.dart';
+import 'package:groceryapp/widgets/widget_home_slider.dart';
 
-import '../models/product.dart';
+// import '../models/product.dart';
 import '../widgets/widgets_home_products.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,12 +17,10 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Container(
           child: ListView(
-        children: [
-          const HomeCategoriesWidget(), 
-          const HomeProductsWidget()
-          // ProductCard(
-          //   model: model,
-          // )
+        children: const[
+           HomeSliderWidget(),
+           HomeCategoriesWidget(), 
+           HomeProductsWidget()
           ],
       )),
     );
