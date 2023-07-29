@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groceryapp/config.dart';
+import 'package:groceryapp/main.dart';
+import 'package:groceryapp/models/cart.dart';
 import 'package:groceryapp/models/category.dart';
 import 'package:groceryapp/models/login_response_model.dart';
 import 'package:groceryapp/models/product.dart';
@@ -110,7 +112,7 @@ class APIService {
       ),
     );
     if (response.statusCode == 200) {
-      // await SharedService.setLoginDetails(loginResponseJson(response.body));
+       await SharedService.setLoginDetails(loginResponseJson(response.body));
       return true;
     } else {
       return false;
@@ -143,13 +145,92 @@ class APIService {
     Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
     Map<String, String> hm = new Map();
     hm["id"] = productId;
-    var url = Uri.http(Config.apiURL, Config.productAPI +"/"+ productId);
+    var url = Uri.http(Config.apiURL, Config.productAPI + "/" + productId);
     var response = await client.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       print(data);
       return Product.fromJson(data["data"]);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Cart?> getCart() async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ${loginDetails!.data.token.toString()}'
+    };
+
+    var url = Uri.http(Config.apiURL, Config.cartAPI);
+    var response = await client.get(url, headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      return Cart.fromJson(data["data"]);
+    } else if (response.statusCode == 401) {
+      navigatorKey.currentState?.pushNamedAndRemoveUntil(
+      "/login", 
+      (route) => false,
+      );
+    } 
+    else {
+      return null;
+    }
+  }
+
+  Future<bool?> addCartItem(productId, qty) async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ${loginDetails!.data.token.toString()}'
+    };
+
+    var url = Uri.http(Config.apiURL, Config.cartAPI);
+    var response = await client.post(url,
+        headers: requestHeaders,
+        body: jsonEncode({
+          "products": [
+            {"product": productId, "qty": qty}
+          ]
+        }));
+
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 401) {
+      navigatorKey.currentState
+          ?.pushNamedAndRemoveUntil("/login", (route) => false);
+    } else {
+      return null;
+    }
+  }
+
+
+    Future<bool?> removeCartItem(productId, qty) async {
+    var loginDetails = await SharedService.loginDetails();
+
+    Map<String, String> requestHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ${loginDetails!.data.token.toString()}'
+    };
+
+    var url = Uri.http(Config.apiURL, Config.cartAPI);
+    var response = await client.delete(url,
+        headers: requestHeaders,
+        body: jsonEncode({
+          {"productId": productId,
+           "qty": qty}
+        }));
+
+    if (response.statusCode == 200) {
+      return true;
+    } else if (response.statusCode == 401) {
+      navigatorKey.currentState
+          ?.pushNamedAndRemoveUntil("/login", (route) => false);
     } else {
       return null;
     }

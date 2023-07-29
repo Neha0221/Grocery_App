@@ -1,41 +1,41 @@
-// import 'dart:convert';
+import 'dart:convert';
 
 
-// import 'package:flutter/widgets.dart';
-// import 'package:groceryapp/models/login_response_model.dart';
-// import 'package:api_cache_manager/utils/cache_manager.dart';
-// import 'package:api_cache_manager/models/cache_db_model.dart';
+import 'package:flutter/widgets.dart';
+import 'package:groceryapp/models/login_response_model.dart';
+import 'package:api_cache_manager/utils/cache_manager.dart';
+import 'package:api_cache_manager/models/cache_db_model.dart';
 
-// class SharedService {
-//   static const String KEY_NAME = "login_key";
+class SharedService {
+  static const String KEY_NAME = "login_key";
 
-//   static Future<bool> isLoggedIn() async {
-//     var isCacheKeyExist = await APICacheManager().isAPICacheKeyExist(KEY_NAME);
+  static Future<bool> isLoggedIn() async {
+    var isCacheKeyExist = await APICacheManager().isAPICacheKeyExist(KEY_NAME);
 
-//     return isCacheKeyExist;
-//   }
+    return isCacheKeyExist;
+  }
 
-//   static Future<void> setLoginDetails(LoginResponseModel model) async {
-//     APICacheDBModel cacheDBModel = APICacheDBModel(
-//       key: KEY_NAME,
-//       syncData: jsonEncode(model.toJson()),
-//     );
+  static Future<void> setLoginDetails(LoginResponseModel model) async {
+    APICacheDBModel cacheDBModel = APICacheDBModel(
+      key: KEY_NAME,
+      syncData: jsonEncode(model.toJson()),
+    );
 
-//     await APICacheManager().addCacheData(cacheDBModel);
-//   }
+    await APICacheManager().addCacheData(cacheDBModel);
+  }
 
-//   static Future<LoginResponseModel?> loginDetails() async {
-//     var isCacheKeyExist = await APICacheManager().isAPICacheKeyExist(KEY_NAME);
-//     if (isCacheKeyExist) {
-//       var cacheData = await APICacheManager().getCacheData(KEY_NAME);
+  static Future<LoginResponseModel?> loginDetails() async {
+    var isCacheKeyExist = await APICacheManager().isAPICacheKeyExist(KEY_NAME);
+    if (isCacheKeyExist) {
+      var cacheData = await APICacheManager().getCacheData(KEY_NAME);
 
-//       return loginResponseJson(cacheData.syncData);
-//     }
-//     return null;
-//   }
+      return loginResponseJson(cacheData.syncData);
+    }
+    return null;
+  }
 
-//   static Future<void> logout(BuildContext context) async {
-//     await APICacheManager().deleteCache(KEY_NAME);
-//     Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
-//   }
-// }
+  static Future<void> logout(BuildContext context) async {
+    await APICacheManager().deleteCache(KEY_NAME);
+    Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
+  }
+}

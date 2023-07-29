@@ -1,8 +1,10 @@
 // import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:groceryapp/api/api_service.dart';
+import 'package:groceryapp/application/notifier/cart_notifier.dart';
 import 'package:groceryapp/application/notifier/product_filter_notifier.dart';
 import 'package:groceryapp/application/notifier/products_notifier.dart';
+import 'package:groceryapp/application/state/cart_state.dart';
 import 'package:groceryapp/application/state/product_state.dart';
 import 'package:groceryapp/models/category.dart';
 import 'package:groceryapp/models/pagination.dart';
@@ -38,11 +40,10 @@ final productsFilterProvider =
 
 final productsNotifierProvider =
     StateNotifierProvider<ProductsNotifier, ProductsState>(
-  (ref) => ProductsNotifier(
-    ref.watch(apiService),
-    ref.watch(productsFilterProvider),
-  )
-    );
+        (ref) => ProductsNotifier(
+              ref.watch(apiService),
+              ref.watch(productsFilterProvider),
+            ));
 
 final slidersProvider =
     FutureProvider.family<List<SliderModel>?, PaginationModel>(
@@ -55,10 +56,8 @@ final slidersProvider =
   },
 );
 
-final productDetailsProvider =
-    FutureProvider.family<Product?,String>(
+final productDetailsProvider = FutureProvider.family<Product?, String>(
   (ref, productId) {
-    
     final apiRepository = ref.watch(apiService);
     return apiRepository.getProductDetails(productId);
   },
@@ -70,4 +69,10 @@ final relatedProductsProvider =
     final apiRepository = ref.watch(apiService);
     return apiRepository.getProducts(productFilterModel);
   },
+);
+
+final cartItemsProvider = StateNotifierProvider<CartNotifier, CartState>(
+  (ref) => CartNotifier(
+    ref.watch(apiService),
+    ),
 );
